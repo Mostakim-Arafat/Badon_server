@@ -114,6 +114,11 @@ async function run() {
             const result = await myCollUser.find(query).toArray()
             res.send(result)
         })
+        app.get('/fund', async (req, res) => {
+            const query = {}
+            const result = await myCollFund.find(query).toArray()
+            res.send(result)
+        })
 
         app.get('/donation_requests/:id', async (req, res) => {
             const id = req.params.id
