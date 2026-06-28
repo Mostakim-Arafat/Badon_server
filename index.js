@@ -104,7 +104,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/users',verifyToken, async (req, res) => {
+        app.get('/users', async (req, res) => {
             const query = {}
             const result = await myCollUser.find(query).toArray()
             res.send(result)
