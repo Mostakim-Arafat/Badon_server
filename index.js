@@ -104,7 +104,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/users', async (req, res) => {
+        app.get('/users',verifyToken, async (req, res) => {
             const query = {}
             const result = await myCollUser.find(query).toArray()
             res.send(result)
@@ -115,7 +115,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/donation_requests/:id', async (req, res) => {
+        app.get('/donation_requests/:id',verifyToken, async (req, res) => {
             const id = req.params.id
             console.log(id)
             const query = {
