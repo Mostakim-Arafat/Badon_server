@@ -115,7 +115,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/donation_requests/:id', async (req, res) => {
+        app.get('/donation_requests/:id',verifyToken, async (req, res) => {
             const id = req.params.id
             console.log(id)
             const query = {
@@ -160,7 +160,7 @@ async function run() {
             const result = await myCollRequest.updateOne(query, update)
             res.send(result)
         })
-        app.patch('/users', async (req, res) => {
+        app.patch('/users',verifyToken, async (req, res) => {
             let updatedinfo = {}
             const { status,role,id } = req.query
             if (status) updatedinfo.status = status;
