@@ -16,12 +16,7 @@ const { SignJWT, jwtVerify, generateKeyPair, createRemoteJWKSet } = require('jos
 app.use(cors());
 app.use(express.json())
 
-// if (!uri) {
-//     console.error(
-//         'MONGO_URL is missing. Create badon_server/.env with MONGO_URL=mongodb://... or mongodb+srv://...'
-//     );
-//     process.exit(1);
-// }
+
 
 const client = new MongoClient(uri, {
     serverApi: {
@@ -67,7 +62,7 @@ const verifyToken = async (req, res, next) => {
 async function run() {
     try {
 
-        await client.connect();
+        //await client.connect();
         //all donation request curd
         app.get('/district', async(req,res) => {
             let query = {}
@@ -130,7 +125,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/my-requests', async (req, res) => {
+        app.get('/my-requests',verifyToken, async (req, res) => {
             const { Email } = req.query
             console.log(Email)
             const query = {
@@ -165,7 +160,7 @@ async function run() {
             const result = await myCollRequest.updateOne(query, update)
             res.send(result)
         })
-        app.patch('/users', async (req, res) => {
+        app.patch('/users',verifyToken, async (req, res) => {
             let updatedinfo = {}
             const { status,role,id } = req.query
             if (status) updatedinfo.status = status;
