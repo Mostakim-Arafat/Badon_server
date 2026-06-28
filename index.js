@@ -115,7 +115,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/donation_requests/:id',verifyToken, async (req, res) => {
+        app.get('/donation_requests/:id', async (req, res) => {
             const id = req.params.id
             console.log(id)
             const query = {
@@ -136,7 +136,7 @@ async function run() {
             res.send(result)
         })
         //status update
-        app.patch('/donation_requests/:id', async (req, res) => {
+        app.patch('/donation_requests/:id',verifyToken, async (req, res) => {
             const id = req.params.id
             const { donorName, donorEmail,donationstatus } = req.query
             const query = {
@@ -160,7 +160,7 @@ async function run() {
             const result = await myCollRequest.updateOne(query, update)
             res.send(result)
         })
-        app.patch('/users',verifyToken, async (req, res) => {
+        app.patch('/users', async (req, res) => {
             let updatedinfo = {}
             const { status,role,id } = req.query
             if (status) updatedinfo.status = status;
@@ -180,7 +180,7 @@ async function run() {
 
         
 
-        app.patch('/donation_requests', async(req,res) => {
+        app.patch('/donation_requests',verifyToken, async(req,res) => {
             const objects = JSON.parse(req.query.data)
             const id = req.query.id
             const query = {
@@ -193,7 +193,7 @@ async function run() {
             res.send(result)
         })
 
-        app.post('/dashboard/create-request', async (req, res) => {
+        app.post('/dashboard/create-request',verifyToken, async (req, res) => {
             const data = req.body
             const result = await myCollRequest.insertOne(data)
             console.log(result)
@@ -208,7 +208,7 @@ async function run() {
 
         //
 
-        app.patch('/user/:id', async (req, res) => {
+        app.patch('/user/:id',verifyToken, async (req, res) => {
             const bodyId = await req.params.id
             const bodys = req.body
             console.log(bodyId, bodys)
@@ -221,7 +221,7 @@ async function run() {
             res.send(result)
         })
 
-        app.delete('/donation_requests/:id', async(req,res) => {
+        app.delete('/donation_requests/:id',verifyToken, async(req,res) => {
             const {id} = req.params
             const query = {
                 _id : new ObjectId(id)
