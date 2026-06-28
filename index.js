@@ -40,10 +40,12 @@ const JWKS = createRemoteJWKSet(
 
 const verifyToken = async (req, res, next) => {
   const authHeader = req?.headers.authorization;
+  console.log(authHeader)
   if (!authHeader) {
     return res.status(401).json({ message: "Unauthorized" });
   }
   const token = authHeader.split(" ")[1];
+  console.log(token)
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
@@ -104,7 +106,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/users', async (req, res) => {
+        app.get('/users',verifyToken, async (req, res) => {
             const query = {}
             const result = await myCollUser.find(query).toArray()
             res.send(result)
